@@ -83,6 +83,6 @@ jobs:
       - name: output information
         run: |
           echo "The workflow has some failures"
-          echo "${{ github}}"
+          echo "${{ toJson(github)}}"
           echo "${{ job.status}}"
 
