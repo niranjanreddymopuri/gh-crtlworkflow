@@ -75,3 +75,14 @@ jobs:
         run: ls
       - name: Deploy
         run: echo "Deploying..."
+  report:
+    needs: [lint, deploy ]
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+      - name: output information
+        run: |
+          echo "The workflow has some failures"
+          echo "${{ github}}"
+          echo "${{ job.status}}"
+
