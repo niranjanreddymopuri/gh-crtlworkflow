@@ -1,9 +1,24 @@
 name: reusable workflow
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      artifact-name:
+        description: 'Name of the artifact to download'
+        required: false
+        default: "dist-files"
+        type: string
 jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
+         - name: get code
+           uses: actions/download-artifact@v4
+           with: 
+            name: ${{ inputs.artifact-name }}
+         - name: list files
+           run: |
+            echo "The following files are in the artifact:"
+            ls -l
          - name: output information
            run: |
             echo "The reusable workflow has been called"
