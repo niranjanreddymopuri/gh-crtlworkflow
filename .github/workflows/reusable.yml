@@ -7,9 +7,16 @@ on:
         required: false
         default: "dist-files"
         type: string
+    outputs:
+      result:
+        description: 'Out put of the result'
+        value: ${{ jobs.deploy.outputs.outcome }}
+
 jobs:
     deploy:
         runs-on: ubuntu-latest
+        outputs:
+          outcome: ${{steps.set-result.outputs.step-output}}
         steps:
          - name: get code
            uses: actions/download-artifact@v4
@@ -20,5 +27,6 @@ jobs:
             echo "The following files are in the artifact:"
             ls -l
          - name: output information
+           id: set-result
            run: |
-            echo "The reusable workflow has been called"
+            echo "set-output=success" >> $GITHUB_OUTPUT
